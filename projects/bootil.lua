@@ -12,19 +12,27 @@ project "bootil_static"
 	files { "../src/**.cpp", "../include/**.h", "../src/**.c", "../src/**.cc", "premake4.lua" }
 	kind "StaticLib"
 	targetname( "bootil_static" )
-	flags { "Symbols", "NoEditAndContinue", "NoPCH", "StaticRuntime", "EnableSSE", "SEH" }
+
+	symbols "On"
+	editandcontinue "Off"
+	enablepch "Off"
+	staticruntime "On"
+	vectorextensions "SSE"
+	exceptionhandling "SEH"
+
 	targetdir ( "../lib/" .. os.get() .. "/" .. _ACTION )
 	includedirs { "../include/", "../src/3rdParty/" }
 	
-	if os.is( "linux" ) or os.is( "macosx" ) then
+	if os.ishost( "linux" ) or os.ishost( "macosx" ) then
 		buildoptions { "-fPIC" }
 	end
 	
-	configuration "Release"
+	filter "configurations:Release"
 		defines { "NDEBUG" }
-		flags{ "OptimizeSpeed", "FloatFast" }
+		optimize "Speed"
+		floatingpoint "Fast"
 	
-	configuration "Debug"
+	filter "configurations:Debug"
 		defines { "_DEBUG" }
 		targetsuffix "_debug"
 	
