@@ -5,7 +5,7 @@ project "bootil_static"
 	files { "../src/**.cpp", "../include/**.h", "../src/**.c", "../src/**.cc", "premake4.lua" }
 	kind "StaticLib"
 	targetname( "bootil_static" )
-	flags { "NoPCH" }
+	enablepch "Off"
 	includedirs { "../include/", "../src/3rdParty/" }
 
 	exceptionhandling "SEH"
@@ -14,11 +14,11 @@ project "bootil_static"
 	staticruntime "On"
 	editandcontinue "Off"
 
-	if os.is( "linux" ) or os.is( "macosx" ) then
+	if os.ishost( "linux" ) or os.ishost( "macosx" ) then
 		buildoptions { "-fPIC" }
 	end
 
-	if os.is( "windows" ) then
+	if os.ishost( "windows" ) then
 		characterset "MBCS"
 	end
 

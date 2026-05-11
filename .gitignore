@@ -1,0 +1,5 @@
+bootil_static.make
+Makefile
+projects/obj
+projects/debug*
+projects/release*
